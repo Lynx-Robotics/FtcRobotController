@@ -8,11 +8,13 @@ public class CONSTANTS {
     public final static double[] imuPid_ = new double[]{0.000001246, 0.00000000000004, 0.000000000000000000}; // imu based pid values
 
     public final static double[] fusedDPid_ = new double[]{0, 0, 0};
+    public final static double[] NullPid_ = new double[]{0, 0, 0};
+
 
     // DeadReckoning Parameter Tuning
     // TODO: TUNE THE DeadRImuPid_
-    public final static double[] DeadRImuPid_ = new double[]{0.87, 0.00000000000004, 0.000000000000000000}; // imu tuning for dead reckoning alignment code
-    public final static double[] DeadRDPid_ = new double[]{.5, 0, 0}; // imu tuning for dead reckoning alignment code
+    public final static double[] DeadRImuPid_ = new double[]{0.04, 0.0000000000000, 0.000000000000000000}; // imu tuning for dead reckoning alignment code
+    public final static double[] DeadRDPid_ = new double[]{0.0, 0.00, 0}; // imu tuning for dead reckoning alignment code
 
     // PID Drive Parameters
     public final static double target_acceleration = 0.0000124;
@@ -20,7 +22,9 @@ public class CONSTANTS {
 
     // Robot Parameters
     public final static double wheel_radius_meters_MECANUM = 0.0508;
+    public final static double wheel_radius_meters_SMALL_OMNI = (0.030);
     public final static double x02 = .18;
     public final static double encoder_count_per_rev_NV = 1120;
     public final static double encoder_count_per_rev_REV = 1120;
+    public final static double encoder_count_per_rev_REV_ENCODERS = 8192;
 }

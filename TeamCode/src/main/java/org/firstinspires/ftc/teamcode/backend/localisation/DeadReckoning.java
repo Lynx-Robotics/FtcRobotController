@@ -44,7 +44,7 @@ public class DeadReckoning {
     double distance_response = 0;
 
     // PID Objects
-    PIDV2 imu_pid = new PIDV2(CONSTANTS.DeadRImuPid_) {
+    PIDV2 imu_pid = new PIDV2(CONSTANTS.NullPid_) {
         @Override
         public void perform(double response) {
             imu_response = response;
@@ -300,7 +300,7 @@ public class DeadReckoning {
 
     private double encoder_to_distance(double encoder_count){
         // TODO: Create Formula for the encoder to distance conversion
-        return 1.2;
+        return ((2*3.14*CONSTANTS.wheel_radius_meters_MECANUM)/CONSTANTS.encoder_count_per_rev_REV) * encoder_count;
     }
 
     private double convert_to_radians(double degree){
