@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.backend.hardware_extensions;
+package org.firstinspires.ftc.teamcode.backend.hardware_extensions.motor_extensions;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;

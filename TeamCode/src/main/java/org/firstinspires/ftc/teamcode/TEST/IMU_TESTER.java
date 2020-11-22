@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.middleend.HardwareMappings.HMap;
-import org.firstinspires.ftc.teamcode.backend.hardware_extensions.MotorPlus;
+import org.firstinspires.ftc.teamcode.backend.hardware_extensions.motor_extensions.MotorPlus;
 
 @Autonomous(name = "IMU PID Tester")
 public class IMU_TESTER extends LinearOpMode {

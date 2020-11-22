@@ -11,7 +11,7 @@
 //import org.firstinspires.ftc.teamcode.FSM.State;
 //import org.firstinspires.ftc.teamcode.middleend.HardwareMappings.HMap;
 //import org.firstinspires.ftc.teamcode.backend.hardware_extensions.IMUPlus;
-//import org.firstinspires.ftc.teamcode.backend.hardware_extensions.MotorPlus;
+//import org.firstinspires.ftc.teamcode.backend.hardware_extensions.motor_extensions.MotorPlus;
 //
 //@Autonomous(name = "AccelerationTester")
 //public class AccelerationTester extends LinearOpMode {

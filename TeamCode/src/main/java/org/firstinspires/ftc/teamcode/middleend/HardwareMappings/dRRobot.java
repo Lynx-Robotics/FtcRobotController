@@ -5,20 +5,20 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.frontend.CONSTANTS;
 import org.firstinspires.ftc.teamcode.backend.hardware_extensions.IMUPlus;
 import org.firstinspires.ftc.teamcode.backend.hardware_extensions.motor_extensions.MotorPP;
+import org.firstinspires.ftc.teamcode.backend.hardware_extensions.motor_extensions.motor_;
+import org.firstinspires.ftc.teamcode.frontend.CONSTANTS;
 
-public class HMap {
-
+public class dRRobot {
     // Members of the HardwareMap
     public DcMotor TL_ = null, TR_ = null, BL_ = null, BR_ = null;
+    public motor_ TL, BL, TR, BR;
     private DcMotor IntakeMotor_ = null;
     private DcMotor LauncherMotor_ = null;
     public BNO055IMU imu_;
 
     // PP extension for Hardware Devices
-    public MotorPP TL, BL, TR, BR;
     public IMUPlus imu;
 
     // Instantiate them
@@ -26,7 +26,7 @@ public class HMap {
     public ElapsedTime runtime  = new ElapsedTime();
 
     /* Constructor */
-    public HMap(){
+    public dRRobot(){
 
     }
 
@@ -61,10 +61,10 @@ public class HMap {
         imu_.initialize(parameters);
 
         // Initializing PP Hardware Classes
-        TL = new MotorPP(new DcMotor[]{TL_}, CONSTANTS.dPid_, CONSTANTS.aPid_, CONSTANTS.vPid_);
-        TR = new MotorPP(new DcMotor[]{TR_}, CONSTANTS.dPid_, CONSTANTS.aPid_, CONSTANTS.vPid_);
-        BL = new MotorPP(new DcMotor[]{BL_}, CONSTANTS.dPid_, CONSTANTS.aPid_, CONSTANTS.vPid_);
-        BR = new MotorPP(new DcMotor[]{BR_}, CONSTANTS.dPid_, CONSTANTS.aPid_, CONSTANTS.vPid_);
+        TL = new motor_(TL_, CONSTANTS.wheel_radius_meters_SMALL_OMNI, CONSTANTS.encoder_count_per_rev_REV_ENCODERS, motor_.motor_usage.through_bore_encoder, motor_.distance_units.M);
+        BL = new motor_(BL_, CONSTANTS.wheel_radius_meters_MECANUM, CONSTANTS.encoder_count_per_rev_REV, motor_.motor_usage.drive_motor, motor_.distance_units.M);
+        TR = new motor_(TR_, CONSTANTS.wheel_radius_meters_MECANUM, CONSTANTS.encoder_count_per_rev_REV, motor_.motor_usage.drive_motor, motor_.distance_units.M);
+        BR = new motor_(BR_, CONSTANTS.wheel_radius_meters_SMALL_OMNI, CONSTANTS.encoder_count_per_rev_REV_ENCODERS, motor_.motor_usage.through_bore_encoder, motor_.distance_units.M);
         imu = new IMUPlus(imu_, CONSTANTS.imuPid_);
 
         // Set zero power
@@ -79,12 +79,13 @@ public class HMap {
 
     public void resetEncoders(){
         TL_.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        TL_.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        TL_.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         TR_.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        TR_.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        TR_.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BL_.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        BL_.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        BL_.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BR_.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        BR_.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        BR_.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
+
 }

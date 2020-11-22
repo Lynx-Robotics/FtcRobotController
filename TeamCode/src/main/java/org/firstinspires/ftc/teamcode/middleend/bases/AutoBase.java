@@ -5,9 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.middleend.HardwareMappings.HMap;
-import org.firstinspires.ftc.teamcode.backend.hardware_extensions.MotorPlus;
+import org.firstinspires.ftc.teamcode.backend.hardware_extensions.motor_extensions.MotorPlus;
 import org.firstinspires.ftc.teamcode.frontend.CONSTANTS;
-import org.firstinspires.ftc.teamcode.backend.localisation.DeadReckoning;
+import org.firstinspires.ftc.teamcode.backend.localisation.dR.DeadReckoning;
 
 public abstract class AutoBase extends LinearOpMode {
 
