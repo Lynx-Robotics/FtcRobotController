@@ -4,21 +4,22 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.backend.control.low_level.PIDV2;
 import org.firstinspires.ftc.teamcode.backend.hardware_extensions.motor_extensions.motor_;
 import org.firstinspires.ftc.teamcode.frontend.CONSTANTS;
 
+import java.util.Locale;
+
 public class DeadReckoning2 {
     // Related to position
-    private double tx, ty;
     private double px = 0, py = 0;
     private double distance_travelled = 0;
+    private int success = 0;
+    private int success_max = 300;
 
     // Related to motor logic
     private motor_[][] motorS;
@@ -74,8 +75,17 @@ public class DeadReckoning2 {
         double target_angle = Math.toDegrees(Math.atan((dY/dX)));
         double target_distance = Math.sqrt(((dX*dX) + (dY*dY)));
 
-        if(!Double.isNaN(target_distance)){
-            while (!stopCondition()){
+        // some logic to handle direction
+        if(py > ty){
+            target_distance = -target_distance;
+        } else if (px > tx){
+            target_distance = -target_distance;
+        }
+
+        int dist_success = 0, imu_success = 0;
+
+        if(!Double.isNaN(distance_travelled)){
+            while ((dist_success < success_max) ){
                 // Update information
                 updateIMU();
                 updateDistance();
@@ -89,20 +99,49 @@ public class DeadReckoning2 {
                 powerRight(distance_response + imu_response);
 
                 // Telemetry Update
-                telem.addData("Target Angle: ", target_angle);
-                telem.addData("Target Distance: ", target_distance);
+                telem.addData("Target Angle : ", target_angle);
                 telem.addData("Current Angle: ", imu_global_angle);
-                telem.addData("IMU Response: ", imu_response);
-                telem.addData("Distance Response: ", distance_response);
-                telem.addData("Current Distancce: ", distance_travelled);
-                telem.addData("Global: ", imu_global_angle);
+                telem.addData("Angle Counter: ", imu_success);
+                telem.addData("---","--");
+                telem.addData("Target Distance : ", target_distance);
+                telem.addData("Current Distance: ", distance_travelled);
+                telem.addData("Distance Counter: ", dist_success);
+                telem.addData("---","--");
+                telem.addData("current (x, y): ", String.format(Locale.ENGLISH,"%f, %f", px, py));
                 telem.update();
+
+                if (isWithin(target_angle-0.05, target_angle+0.05, imu_global_angle)){
+                    dist_success += 1;
+                }
+
+                if (isWithin(target_distance-0.05, target_distance+0.05, distance_travelled)){
+                    dist_success += 1;
+                }
             }
         }
 
         // Update Position Info
         px = tx;
         py = ty;
+
+//        resetImu();
+        resetMotorInformation();
+    }
+
+    private void updateSuccess(double objToCheck){
+        if (isWithin(0.0, 0.005, objToCheck, 9)){
+            success += 1;
+        } else {
+            success = 0;
+        }
+    }
+
+    private boolean isWithin(double min, double max, double val){
+        return (val < max) && (val > min);
+    }
+
+    private boolean isWithin(double targ, double tolerance, double val, int meaningless){
+        return isWithin((targ-tolerance), (targ+tolerance), val, 0);
     }
 
     // Encoder Position Related Methods
@@ -116,7 +155,7 @@ public class DeadReckoning2 {
 
     private void updateDistance(){
         double dist = leftDistance() + rightDistance()/2.0;
-        if(!Double.isNaN(dist)){distance_travelled = dist;} else {distance_travelled = 0;}
+        distance_travelled = dist;
     }
 
     private double getDistanceFromOneSideOfRobot(int col){
@@ -174,6 +213,7 @@ public class DeadReckoning2 {
 
     public boolean stopCondition(){
         return false;
+//        return success > success_max;
     }
 
     private void powerLeft(double p){
@@ -187,6 +227,18 @@ public class DeadReckoning2 {
         for (int i = 0; i < motorS.length; i++){
             motor_ cm = motorS[i][1];
             cm.setPower(p);
+        }
+    }
+
+    private void resetDistance(){
+        this.distance_travelled = 0;
+    }
+
+    private void resetMotorInformation(){
+        for (motor_[] mS : motorS){
+            for (motor_ m : mS){
+                m.resetInfo();
+            }
         }
     }
 

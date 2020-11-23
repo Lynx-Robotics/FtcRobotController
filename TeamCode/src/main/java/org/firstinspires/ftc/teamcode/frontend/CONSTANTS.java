@@ -12,9 +12,8 @@ public class CONSTANTS {
 
 
     // DeadReckoning Parameter Tuning
-    // TODO: TUNE THE DeadRImuPid_
-    public final static double[] DeadRImuPid_ = new double[]{0.04, 0.0000000000000, 0.000000000000000000}; // imu tuning for dead reckoning alignment code
-    public final static double[] DeadRDPid_ = new double[]{0.0, 0.00, 0}; // imu tuning for dead reckoning alignment code
+    public final static double[] DeadRImuPid_ = new double[]{0.78, 0.0000000000000, 0.000000000000000000}; // imu tuning for dead reckoning alignment code
+    public final static double[] DeadRDPid_ = new double[]{0.6, 0.00, 0}; // imu tuning for dead reckoning alignment code
 
     // PID Drive Parameters
     public final static double target_acceleration = 0.0000124;

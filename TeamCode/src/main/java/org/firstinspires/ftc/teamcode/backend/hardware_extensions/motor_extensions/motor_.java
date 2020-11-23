@@ -29,8 +29,8 @@ public class motor_ {
     private double current_distance;
 
     // Constants
-    private double e2dC = (2*3.1459*wheel_rad)/tpr;
-    private double d2eC = 1/e2dC;
+    private double e2dC;
+    private double d2eC;
 
     private double e2eC = 1;
 
@@ -40,6 +40,9 @@ public class motor_ {
         this.tpr = tpr;
         this.cMotorType = cMotorType;
         this.chosen_unit = chosen_unit;
+
+        this.e2dC = (2*3.1459*wheel_rad)/tpr;
+        this.d2eC = 1/e2dC;
     }
 
     public void linkToMotor(motor_ lMotor){
@@ -70,6 +73,13 @@ public class motor_ {
     public int distance_to_enc(double dist){
         // returns the encoder ticks for a given distance
         return (int)(d2eC * dist);
+    }
+
+    public void resetInfo(){
+        this.current_distance = 0;
+        this.current_encoder_count = 0;
+        this.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void setPower(double p){
