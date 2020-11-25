@@ -19,7 +19,7 @@ public class DeadReckoning2 {
     private double px = 0, py = 0;
     private double distance_travelled = 0;
     private int success = 0;
-    private int success_max = 300;
+    private int success_max = 150;
 
     // Related to motor logic
     private motor_[][] motorS;

@@ -2,6 +2,9 @@ package org.firstinspires.ftc.teamcode.backend.hardware_extensions.motor_extensi
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.backend.control.low_level.PIDV2;
+import org.firstinspires.ftc.teamcode.frontend.CONSTANTS;
+
 public class motor_ {
 
     public enum motor_usage{
@@ -10,17 +13,8 @@ public class motor_ {
         through_bore_encoder
     }
 
-    public enum distance_units{
-        M,
-        CM,
-        IN,
-        MM,
-        FT
-    }
-
     public double wheel_rad, tpr;
     public motor_usage cMotorType;
-    private distance_units chosen_unit;
 
     private motor_ lMotor = null;
     public DcMotor motor = null;
@@ -28,18 +22,32 @@ public class motor_ {
     private int current_encoder_count;
     private double current_distance;
 
+    private double dResponse;
+
     // Constants
     private double e2dC;
     private double d2eC;
 
     private double e2eC = 1;
 
-    public motor_(DcMotor m, double wheel_rad, double tpr, motor_usage cMotorType, distance_units chosen_unit){
+    // PID Stuff
+    PIDV2 dPid = new PIDV2(CONSTANTS.dPidREV_PLANETARY) {
+        @Override
+        public void perform(double response) {
+            dResponse = response;
+        }
+
+        @Override
+        public double getInputData() {
+            return getDistance();
+        }
+    };
+
+    public motor_(DcMotor m, double wheel_rad, double tpr, motor_usage cMotorType){
         this.wheel_rad = wheel_rad;
         this.motor = m;
         this.tpr = tpr;
         this.cMotorType = cMotorType;
-        this.chosen_unit = chosen_unit;
 
         this.e2dC = (2*3.1459*wheel_rad)/tpr;
         this.d2eC = 1/e2dC;
@@ -75,6 +83,16 @@ public class motor_ {
         return (int)(d2eC * dist);
     }
 
+    public void NoLoopGoToPos(double dist){
+        // This does not operate in a loop! You must run this continually for it to operate
+        // as it is designed.
+
+        // the method assumes that the distance is a relative number to our current position (i.e,
+        // that if you put 8.0m as your distance, you are expecting it go 8.0m forward regardless
+        // of its position on the field).
+        dPid.executePID((dist));
+    }
+
     public void resetInfo(){
         this.current_distance = 0;
         this.current_encoder_count = 0;
@@ -86,4 +104,7 @@ public class motor_ {
         motor.setPower(p);
     }
 
+    public double getdResponse() {
+        return dResponse;
+    }
 }

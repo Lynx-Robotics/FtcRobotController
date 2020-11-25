@@ -61,10 +61,10 @@ public class dRRobot {
         imu_.initialize(parameters);
 
         // Initializing PP Hardware Classes
-        TL = new motor_(TL_, CONSTANTS.wheel_radius_meters_SMALL_OMNI, CONSTANTS.encoder_count_per_rev_REV_ENCODERS, motor_.motor_usage.through_bore_encoder, motor_.distance_units.M);
-        BL = new motor_(BL_, CONSTANTS.wheel_radius_meters_MECANUM, CONSTANTS.encoder_count_per_rev_REV, motor_.motor_usage.drive_motor, motor_.distance_units.M);
-        TR = new motor_(TR_, CONSTANTS.wheel_radius_meters_MECANUM, CONSTANTS.encoder_count_per_rev_REV, motor_.motor_usage.drive_motor, motor_.distance_units.M);
-        BR = new motor_(BR_, CONSTANTS.wheel_radius_meters_SMALL_OMNI, CONSTANTS.encoder_count_per_rev_REV_ENCODERS, motor_.motor_usage.through_bore_encoder, motor_.distance_units.M);
+        TL = new motor_(TL_, CONSTANTS.wheel_radius_meters_SMALL_OMNI, CONSTANTS.encoder_count_per_rev_REV_ENCODERS, motor_.motor_usage.through_bore_encoder);
+        BL = new motor_(BL_, CONSTANTS.wheel_radius_meters_MECANUM, CONSTANTS.encoder_count_per_rev_REV, motor_.motor_usage.drive_motor);
+        TR = new motor_(TR_, CONSTANTS.wheel_radius_meters_MECANUM, CONSTANTS.encoder_count_per_rev_REV, motor_.motor_usage.drive_motor);
+        BR = new motor_(BR_, CONSTANTS.wheel_radius_meters_SMALL_OMNI, CONSTANTS.encoder_count_per_rev_REV_ENCODERS, motor_.motor_usage.through_bore_encoder);
         imu = new IMUPlus(imu_, CONSTANTS.imuPid_);
 
         // Set zero power

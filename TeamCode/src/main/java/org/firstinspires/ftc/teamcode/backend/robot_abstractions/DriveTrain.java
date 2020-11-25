@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.backend.control.low_level.PIDV2;
 import org.firstinspires.ftc.teamcode.backend.hardware_extensions.motor_extensions.MotorPP;
 
 import java.util.List;
-
+@Deprecated
 public class DriveTrain {
 
     private DcMotor[] driveMotors; // 1D array with TL, TR, BL, BR arrangement (position matters!)
