@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.backend.hardware_extensions.SeriesX;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -21,6 +22,10 @@ public class imuX {
     // angle pid
     private PIDV2 imuPid;
     private double imuResponse;
+
+    // debug
+    private Telemetry telem;
+
 
     public imuX(BNO055IMU imu){
         // Basic parameters for the imu
@@ -63,6 +68,14 @@ public class imuX {
         lAngle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX,
                 AngleUnit.DEGREES);
         gAngle = 0;
+    }
+
+    public void setTelem(Telemetry telem){
+        this.telem = telem;
+    }
+
+    public Telemetry getTelem(){
+        return this.telem;
     }
 
     public double getImuResponse(double target_angle) {

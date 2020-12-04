@@ -9,8 +9,9 @@ public class DriveTrainTester extends AutoBase3 {
 
     @Override
     public void autoCode() {
-        robot.dT.drive(0.5);
-        sleep(150);
-        robot.dT.drive(-0.5);
+        robot.dT.drive(1, 5);
+        sleep(500);
+        robot.dT.drive(-1);
+        sleep(500);
     }
 }

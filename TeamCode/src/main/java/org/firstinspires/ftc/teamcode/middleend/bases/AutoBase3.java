@@ -5,10 +5,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.backend.hardware_extensions.motor_extensions.motor_;
 import org.firstinspires.ftc.teamcode.backend.localisation.dR.DeadReckoning2;
+import org.firstinspires.ftc.teamcode.backend.localisation.dR.dR3;
 import org.firstinspires.ftc.teamcode.middleend.HardwareMappings.DTHMap;
 
 public abstract class AutoBase3 extends LinearOpMode {
     public DTHMap robot = new DTHMap();
+    public dR3 locate;
 
     public abstract void autoCode();
 
@@ -26,6 +28,8 @@ public abstract class AutoBase3 extends LinearOpMode {
         }
 
         addTelemetryData("Done Calibrating...","");
+        robot.dT.addTelem(telemetry);
+        locate = new dR3(robot.dT);
 
         // End of Initialization
         waitForStart();

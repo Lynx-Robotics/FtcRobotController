@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.middleend;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.backend.hardware_extensions.SeriesX.imuX;
 import org.firstinspires.ftc.teamcode.backend.hardware_extensions.SeriesX.mX;
 
@@ -26,6 +27,13 @@ public class DriveTrain {
     // dT status variables
     int distTolerance = 150;
 
+    // Telemetry
+    private Telemetry telem;
+
+    public Telemetry getTelem(){
+        return telem;
+    }
+
     public DriveTrain(mX[][] motors, imuX imu, dTLinkType dTLinkType){
         // constructor parameters initializations
         this.motors = motors;
@@ -51,12 +59,26 @@ public class DriveTrain {
     public void drive(double dist, double angle){
         // drive method with target angle as zero
         int dSuccess = 0;
+        for (int i = 0; i < motors.length; i++){
+            motors[i][0].reset();
+            motors[i][1].reset();
+        }
         while (dSuccess < distTolerance){
             double tDSuccess = 0;
             double eResponse = imu.getImuResponse(angle);
+            telem.addData("Current Angle", imu.updateAngle());
             tDSuccess += dPidLeft(dist, eResponse);
             tDSuccess += dPidRight(dist, -eResponse);
             dSuccess += tDSuccess/2.0;
+
+            if(telem != null){
+                telem.addData("dSuccess", dSuccess);
+                telem.addData("Current Angle", imu.updateAngle());
+                telem.addData("Distance", dist);
+                telem.addData("Angle", angle);
+                telem.addData("Angle Response", eResponse);
+                telem.update();
+            }
         }
     }
 
@@ -85,6 +107,10 @@ public class DriveTrain {
         setPowerRight(power);
     }
 
+    public void addTelem(Telemetry telem){
+        this.telem = telem;
+    }
+
     // under the hood api's
     private void linkMotors(dTLinkType dTLinkType){
         if (dTLinkType == DriveTrain.dTLinkType.LEFT_RIGHT_GENERAL){
@@ -109,7 +135,7 @@ public class DriveTrain {
                 mX motor = motors[i][0];
                 motor.addResponse(eResponse);
                 motor.goToPos(target_distance, false);
-                motor.dSuccess += dSAvg;
+                dSAvg += motor.dSuccess;
             }
             return dSAvg / motors.length;
         }

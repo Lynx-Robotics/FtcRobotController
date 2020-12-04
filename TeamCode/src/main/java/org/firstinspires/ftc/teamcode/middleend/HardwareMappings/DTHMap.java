@@ -48,8 +48,8 @@ public class DTHMap {
 
         // 2D Configuration of drive train motors
         motors =  new mX[][]{
-                {TL, TR},
-                {BL, BR},
+                {TL, BR}, // BR is placed in front because of some coding that I did (should be fixed later)
+                {BL, TR},
         };
 
         // imu extensions
@@ -57,7 +57,7 @@ public class DTHMap {
         imu = new imuX(imu_);
 
         // drivetrain construction
-        dT = new DriveTrain(motors, imu, DriveTrain.dTLinkType.FOUR_WHEEL_DRIVE);
+        dT = new DriveTrain(motors, imu, DriveTrain.dTLinkType.LEFT_RIGHT_GENERAL);
 
     }
 

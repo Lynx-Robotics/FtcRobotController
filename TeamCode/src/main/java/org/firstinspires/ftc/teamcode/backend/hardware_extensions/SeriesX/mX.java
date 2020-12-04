@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.backend.hardware_extensions.SeriesX;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.backend.control.low_level.PIDV2;
 
 public class mX {
@@ -59,8 +60,39 @@ public class mX {
     public void goToPos(double pos, boolean thread_safe){
         // this method will displace the wheel by the amount given in the 'pos' param
         // this is achieved by adding it to our current position.
-        reset(); // allows us to perform absolute displacement without clearing variables (good)
-        double tPos = cD + pos; // tPos -> target position
+        double tPos = lD + pos; // tPos -> target position
+
+        if (thread_safe){
+            // note this is a thread locking loop
+            dSuccess = 0;
+
+            while (dSuccess < 100) {
+                dPidIter(tPos); // handles sensor update and power direction to motor
+
+                // perform success check
+                if ((cD < (tPos + dPidTolerance)) && (cD > (tPos - dPidTolerance))){
+                    dSuccess += 1;
+                }
+            }
+        } else {
+            // this is thread safe, but it is a single iteration
+            dPidIter(tPos); // handles sensor update and power direction to motor
+
+            // perform success check
+            if ((cD < (tPos + dPidTolerance)) && (cD > (tPos - dPidTolerance))){
+                dSuccess += 1;
+            }
+        }
+
+    }
+
+    public void goToPos(double pos, boolean thread_safe, Telemetry telem){
+        // this method will displace the wheel by the amount given in the 'pos' param
+        // this is achieved by adding it to our current position.
+        double tPos = lD + pos; // tPos -> target position
+
+        telem.addData("TPos", tPos);
+        telem.update();
 
         if (thread_safe){
             // note this is a thread locking loop
