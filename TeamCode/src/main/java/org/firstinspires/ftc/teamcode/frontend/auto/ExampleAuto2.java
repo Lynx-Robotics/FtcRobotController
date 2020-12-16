@@ -12,6 +12,7 @@ public class ExampleAuto2 extends AutoBase2 {
 //        drive(new double[]{0.4, 0.4});
 //        drive(new double[]{0.8, 0.0});
 //        drive(new double[]{0.0, 0.0});
-        drive(new double[]{0.0, 1.0});
+        drive(new double[]{1.0, 0.0});
+        drive(new double[]{0.0, 0.0});
     }
 }

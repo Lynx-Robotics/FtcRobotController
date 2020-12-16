@@ -45,8 +45,7 @@ public class mX {
 
             @Override
             public double getInputData() {
-                updateDistance();
-                return cD;
+                return getDistance();
             }
         };
     }
@@ -60,7 +59,7 @@ public class mX {
     public void goToPos(double pos, boolean thread_safe){
         // this method will displace the wheel by the amount given in the 'pos' param
         // this is achieved by adding it to our current position.
-        double tPos = lD + pos; // tPos -> target position
+        double tPos = pos; // tPos -> target position
 
         if (thread_safe){
             // note this is a thread locking loop
@@ -153,7 +152,7 @@ public class mX {
     // under the hood API's
     private void updateDistance(){
         cE = motor.getCurrentPosition();
-        cD = e2d_ * cE;
+        cD = (e2d_ * cE)-lD;
     }
 
     private void dPidIter(double t){

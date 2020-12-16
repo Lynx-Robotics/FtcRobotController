@@ -110,11 +110,11 @@ public class DeadReckoning2 {
                 telem.addData("current (x, y): ", String.format(Locale.ENGLISH,"%f, %f", px, py));
                 telem.update();
 
-                if (isWithin(target_angle-0.05, target_angle+0.05, imu_global_angle)){
+                if (isWithin(target_angle-0.15, target_angle+0.15, imu_global_angle)){
                     dist_success += 1;
                 }
 
-                if (isWithin(target_distance-0.05, target_distance+0.05, distance_travelled)){
+                if (isWithin(target_distance-0.15, target_distance+0.15, distance_travelled)){
                     dist_success += 1;
                 }
             }

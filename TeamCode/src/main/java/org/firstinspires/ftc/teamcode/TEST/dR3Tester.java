@@ -10,9 +10,14 @@ public class dR3Tester extends AutoBase3 {
 
     @Override
     public void autoCode() {
-        locate.move(0.8, 0.8);
-        locate.move(0.8, 0.8);
+        sleep(500);
+        locate.move(0.0, 0.0);
         robot.dT.setPower(0);
-        sleep(5000);
+
+        telemetry.addData("X-> ", locate.getX());
+        telemetry.addData("Y-> ", locate.getY());
+        telemetry.update();
+        sleep(15000);
+
     }
 }

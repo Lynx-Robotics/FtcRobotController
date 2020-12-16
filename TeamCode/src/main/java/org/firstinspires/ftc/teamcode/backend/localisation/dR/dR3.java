@@ -43,15 +43,22 @@ public class dR3 {
 
         dt.drive(target_dist, target_angle);
 
-        x = tx;
-        y = ty;
+        this.x = tx;
+        this.y = ty;
+    }
 
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
     }
 
     private double calcTargAngle(double tX, double tY){
         double ratio;
-        if (tX != 0){
-            ratio = tY/tX;
+        if (tY != 0){
+            ratio = (tY - y)/(tX - x);
         } else {
             ratio = 0.00000000000000000001;
         }

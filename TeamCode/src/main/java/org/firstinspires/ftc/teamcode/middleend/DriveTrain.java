@@ -47,22 +47,25 @@ public class DriveTrain {
     // surface level api's
     public void turn(double angle){
         // call imu iter function
-        double eResopnse = imu.getImuResponse(angle);
-        setPowerLeft(eResopnse);
-        setPowerRight(-eResopnse);
+        while (imu.updateAngle() >= (angle - 0.1) && imu.updateAngle() <= (angle + 0.1)){
+            double eResopnse = imu.getImuResponse(angle);
+            setPowerLeft(eResopnse);
+            setPowerRight(-eResopnse);
+        }
+        setPower(0);
     }
 
     public void drive(double dist){
-        drive(dist, 0.000001);
+        drive(dist, 0.001);
     }
 
     public void drive(double dist, double angle){
         // drive method with target angle as zero
         int dSuccess = 0;
-        for (int i = 0; i < motors.length; i++){
-            motors[i][0].reset();
-            motors[i][1].reset();
-        }
+//        for (int i = 0; i < motors.length; i++){
+//            motors[i][0].reset();
+//            motors[i][1].reset();
+//        }
         while (dSuccess < distTolerance){
             double tDSuccess = 0;
             double eResponse = imu.getImuResponse(angle);
@@ -74,8 +77,9 @@ public class DriveTrain {
             if(telem != null){
                 telem.addData("dSuccess", dSuccess);
                 telem.addData("Current Angle", imu.updateAngle());
-                telem.addData("Distance", dist);
-                telem.addData("Angle", angle);
+                telem.addData("Target Distance", dist);
+
+                telem.addData("Target Angle", angle);
                 telem.addData("Angle Response", eResponse);
                 telem.update();
             }

@@ -5,7 +5,8 @@ public class CONSTANTS {
     public final static double[] dPid_ = new double[]{0.472, 0.0000000006, 0.00000000000075347}; // distance pid values
     public final static double[] aPid_ = new double[]{0.000000504, 0.00000000002998311, 0.000000000000702983749}; // acceleration pid values
     public final static double[] vPid_ = new double[]{.000000000000004, 0, 0}; // velocity pid values
-    public final static double[] imuPid_ = new double[]{0.8659925, 0.000000000017295, 0.0000000000589}; // imu based pid values
+//    public final static double[] imuPid_ = new double[]{0.8659925, 0.000000000017295, 0.0000000000589}; // imu based pid values
+public final static double[] imuPid_ = new double[]{0.000005659925, 0.0, 0.0}; // imu based pid values
     public final static double[] dPidREV_PLANETARY = new double[]{0.761232, 0.00000009, 0};
 
     public final static double[] fusedDPid_ = new double[]{0, 0, 0};
