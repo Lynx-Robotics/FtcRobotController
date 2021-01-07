@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.backend.localisation.dR;
 
 import org.firstinspires.ftc.teamcode.backend.hardware_extensions.SeriesX.imuX;
 import org.firstinspires.ftc.teamcode.backend.hardware_extensions.SeriesX.mX;
-import org.firstinspires.ftc.teamcode.middleend.DriveTrain;
+import org.firstinspires.ftc.teamcode.backend.robot_abstractions.DriveTrain;
 
 public class dR3 {
     // Raw mX implementation
@@ -12,7 +12,7 @@ public class dR3 {
     private imuX imu;
 
     // DriveTrain Implementation
-    private DriveTrain dt;
+    private org.firstinspires.ftc.teamcode.backend.robot_abstractions.DriveTrain dt;
 
     private double current_total_dist = 0;
     private double current_angle = 0;

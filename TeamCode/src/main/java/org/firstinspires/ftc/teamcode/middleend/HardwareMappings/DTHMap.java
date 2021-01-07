@@ -8,9 +8,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.backend.hardware_extensions.SeriesX.imuX;
 import org.firstinspires.ftc.teamcode.backend.hardware_extensions.SeriesX.mX;
-import org.firstinspires.ftc.teamcode.backend.hardware_extensions.motor_extensions.motor_;
+import org.firstinspires.ftc.teamcode.backend.robot_abstractions.DriveTrain;
 import org.firstinspires.ftc.teamcode.frontend.CONSTANTS;
-import org.firstinspires.ftc.teamcode.middleend.DriveTrain;
 
 public class DTHMap {
     // raw hardware stuff
@@ -24,7 +23,7 @@ public class DTHMap {
 
     // surface-level abstraction stuff
     private mX[][] motors;
-    public DriveTrain dT;
+    public org.firstinspires.ftc.teamcode.backend.robot_abstractions.DriveTrain.DriveTrain dT;
 
     public void init(HardwareMap aHwmap, Telemetry telem){
         hwmap = aHwmap;
@@ -57,7 +56,7 @@ public class DTHMap {
         imu = new imuX(imu_);
 
         // drivetrain construction
-        dT = new DriveTrain(motors, imu, DriveTrain.dTLinkType.LEFT_RIGHT_GENERAL);
+        dT = new org.firstinspires.ftc.teamcode.backend.robot_abstractions.DriveTrain.DriveTrain(motors, imu, DriveTrain.DriveTrain.dTLinkType.LEFT_RIGHT_GENERAL);
 
     }
 

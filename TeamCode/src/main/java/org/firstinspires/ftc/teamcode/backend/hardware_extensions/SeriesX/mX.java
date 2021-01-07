@@ -169,5 +169,7 @@ public class mX {
         eResponse = 0;
     }
 
-
+    public double getE2d_() {
+        return e2d_;
+    }
 }

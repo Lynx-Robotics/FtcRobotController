@@ -33,27 +33,6 @@ public class ExampleDrivetrainAuto extends AutoBase3 {
         }
         robot.dT.setPower(0.0);
         sleep(1000);
-//        // Checking turning mechanism
-//        addTelemetryData("STATUS", "S3 (Turning Test)");
-//        sleep(2000);
-//        robot.dT.turn(0);
-//        sleep(1000);
-//        robot.dT.turn(90);
-//        sleep(1000);
-//        robot.dT.turn(90);
-//        sleep(1000);
-//        robot.dT.turn(90);
-//        sleep(1000);
-//        robot.dT.turn(90);
-//        sleep(1000);
-//        robot.dT.turn(-90);
-//        sleep(1000);
-//        robot.dT.turn(-90);
-//        sleep(1000);
-//        robot.dT.turn(-90);
-//        sleep(1000);
-//        robot.dT.turn(-90);
-//        sleep(1000);
 
         // Checking distance drive mechanism
         addTelemetryData("STATUS", "S4 (Drive Method Testing)");
@@ -79,7 +58,6 @@ public class ExampleDrivetrainAuto extends AutoBase3 {
         addTelemetryData("STATUS", "S8 (Distance Angle Random Testing)");
         robot.dT.drive(0.3, -31);
         sleep(1000);
-
         sleep(6000);
     }
 }

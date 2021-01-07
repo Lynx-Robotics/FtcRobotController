@@ -79,7 +79,13 @@ public class imuX {
     }
 
     public double getImuResponse(double target_angle) {
-        imu_iter(target_angle);
+        double angle;
+        if(target_angle == 0){
+            angle = 0.000000000000000001;
+        } else {
+            angle = target_angle;
+        }
+        imu_iter(angle);
         return imuResponse;
     }
 
