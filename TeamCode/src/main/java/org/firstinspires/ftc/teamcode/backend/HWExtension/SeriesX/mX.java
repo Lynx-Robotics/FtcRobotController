@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.backend.hardware_extensions.SeriesX;
+package org.firstinspires.ftc.teamcode.backend.HWExtension.SeriesX;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 

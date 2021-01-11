@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.backend.robot_abstractions;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.backend.hardware_extensions.SeriesX.imuX;
-import org.firstinspires.ftc.teamcode.backend.hardware_extensions.SeriesX.mX;
+import org.firstinspires.ftc.teamcode.backend.HWExtension.SeriesX.imuX;
+import org.firstinspires.ftc.teamcode.backend.HWExtension.SeriesX.mX;
 
 public class DriveTrain {
     /*
