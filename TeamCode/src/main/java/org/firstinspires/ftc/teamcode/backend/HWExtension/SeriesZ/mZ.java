@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import java.util.ArrayList;
 
-class mZ {
+public class mZ {
     // "Primitive" Hardware Object
     private DcMotor motor;
 
@@ -64,6 +64,9 @@ class mZ {
     public void setPower(double power, double min, double max){
         double filteredPower = Range.clip(power, min, max);
         this.motor.setPower(filteredPower);
+        for(mZ m : linkedMotors){
+            m.setPower(power);
+        }
     }
 
     // setting the power with the same lower and upper bound
