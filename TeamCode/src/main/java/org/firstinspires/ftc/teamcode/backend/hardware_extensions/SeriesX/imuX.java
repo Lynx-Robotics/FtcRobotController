@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.backend.control.low_level.PIDV2;
+import org.firstinspires.ftc.teamcode.backend.control.low_level.PID;
 import org.firstinspires.ftc.teamcode.frontend.CONSTANTS;
 
 public class imuX {
@@ -20,7 +20,7 @@ public class imuX {
     private double gAngle;
 
     // angle pid
-    private PIDV2 imuPid;
+    private PID imuPid;
     private double imuResponse;
 
     // debug
@@ -41,7 +41,7 @@ public class imuX {
         imu.initialize(parameters);
 
         // initialize pid parameters
-        imuPid = new PIDV2(CONSTANTS.imuPid_) {
+        imuPid = new PID(CONSTANTS.imuPid_) {
             @Override
             public void perform(double response) {
                 imuResponse = response;

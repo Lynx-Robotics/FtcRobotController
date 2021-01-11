@@ -1,106 +1,70 @@
-//package org.firstinspires.ftc.teamcode.backend.control.low_level;
-//
-//import com.qualcomm.robotcore.util.ElapsedTime;
-//
-//import org.firstinspires.ftc.teamcode.FSM.FiniteStateMachine;
-//import org.firstinspires.ftc.teamcode.FSM.State;
-//
-//@Deprecated
-//abstract public class PID extends FiniteStateMachine {
-//    // PID Characteristics
-//    private double kp, ki, kd;
-//    public double current_target = 0.0;
-//    private double integral_sum = 0.0;
-//    private double last_err = 0.0;
-//    private ElapsedTime pidRuntime = new ElapsedTime();
-//    private int target_counter = 0;
-//    private double error_tolerance;
-//    public boolean PID_TARGET_REACHED = false;
-//
-//    public PID(double kp, double ki, double kd, double error_tolerance){
-//        this.kp = kp;
-//        this.ki = ki;
-//        this.kd = kd;
-//        this.error_tolerance = error_tolerance;
-//        pidRuntime.reset();
-//    }
-//
-//    abstract public void doThingWithResponse(double response);
-//
-//    private double RelativeError(double input){
-//        if (current_target == 0.0){
-//            current_target= 0.1;
-//        }
-//
-//        return ((input-current_target))/current_target;
-//    }
-//
-//    public void giveInput(double input){
-//        double rel_err = RelativeError(input);
-//        PIDR(rel_err);
-//        last_err = rel_err;
-//    }
-//
-//    public void giveInput(double input, double target){
-//        current_target = target;
-//        target_counter = 0;
-//        PID_TARGET_REACHED = false;
-//        integral_sum = 0.0;
-//        last_err = 0.0;
-//        pidRuntime.reset();
-//        giveInput(input);
-//    }
-//
-//    private boolean isWithin(double tolerance, double value){
-//        return ((0-tolerance) < value) && (value < (0+tolerance));
-//    }
-//
-//    private void PIDR(double rel_err){
-//        // iterate through one pid calculation
-//        double time_el = pidRuntime.milliseconds();
-//        double response = pResponse(rel_err) + iResponse(time_el, rel_err)
-//                + dResponse(time_el, rel_err);
-//        doThingWithResponse(response);
-//        // We need a way to know that we've stopped
-//        if (isWithin(error_tolerance, rel_err)){
-//            // if our rel_err is 6% within 0.09 start recording stop condition
-//            target_counter += 1;
-//        } else {
-//            target_counter = 0;
-//        }
-//
-//        if (target_counter > 50){
-//            PID_TARGET_REACHED = true;
-//        }
-//        pidRuntime.reset();
-//    }
-//
-//    // PID Response Func
-//    private double pResponse(double rel_err){
-//        return (rel_err * kp);
-//    }
-//
-//    private double iResponse(double time_el, double rel_err){
-//        // Do something with the error
-//        double newIntegral = calculateDefiniteIntegral(rel_err, time_el);
-//        integral_sum += newIntegral;
-//
-//        // Return the response
-//        return (integral_sum * ki);
-//    }
-//
-//    private double dResponse(double time_el, double rel_err){
-//        // Do something with the error
-//        double current_derivative = calculateDerivative(rel_err, time_el);
-//        return (current_derivative * kd);
-//
-//    }
-//
-//    private double calculateDefiniteIntegral(double err, double time_el){
-//        return err*time_el;
-//    }
-//
-//    private double calculateDerivative(double rel_err, double time_el){
-//        return (rel_err-last_err)/time_el;
-//    }
-//}
+package org.firstinspires.ftc.teamcode.backend.control.low_level;
+
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+public abstract class PID {
+    private double kp, ki, kd;
+    private double integralSum = 0.0;
+    private double last_err;
+    private ElapsedTime pidRuntime = new ElapsedTime();
+
+    abstract public void perform(double response);
+    abstract public double getInputData();
+
+    public PID(double kp, double ki, double kd){
+        this.kp = kp;
+        this.ki = ki;
+        this.kd = kd;
+        pidRuntime.reset();
+    }
+
+    public PID(double[] k){
+        this.kp = k[0];
+        this.ki = k[1];
+        this.kd = k[2];
+        pidRuntime.reset();
+    }
+
+    private double RelativeError(double target){
+        // Modeled after equation -> (-x/target) + 1
+        // Modeled after equation -> (-x/target) - 1
+        double input_data = getInputData(), m;
+        int y_intercept;
+        if (target < 0){
+            y_intercept = -1;
+            return (((input_data)/(target))+y_intercept);
+        } else {
+            y_intercept = 1;
+            return (-((input_data)/(target))+y_intercept);
+        }
+    }
+
+    private double pResponse(double rel_err){
+        return kp*rel_err;
+    }
+
+    private double iResponse(double rel_err, double time_elapsed){
+        integralSum += rel_err*time_elapsed;
+        return ki*integralSum;
+    }
+
+    private double dResponse(double rel_err, double time_elapsed){
+        return kd*((rel_err-last_err)/time_elapsed);
+    }
+
+    public void executePID(double target){
+        double time_elapsed = pidRuntime.milliseconds();
+        double rel_error = RelativeError(target);
+        perform(pResponse(rel_error)
+                + iResponse(rel_error, time_elapsed)
+                + dResponse(rel_error, time_elapsed));
+        pidRuntime.reset();
+        last_err = rel_error;
+    }
+
+    public void restartPID(){
+        integralSum = 0.0;
+        pidRuntime.reset();
+        last_err = 0.0;
+    }
+}

@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.backend.hardware_extensions.SeriesX;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.backend.control.low_level.PIDV2;
+import org.firstinspires.ftc.teamcode.backend.control.low_level.PID;
 
 public class mX {
     // Raw Hardware
@@ -16,7 +16,7 @@ public class mX {
     private double e2d_;
 
     // PID Controller
-    private PIDV2 dPid;
+    private PID dPid;
     private double[] dPid_;
     private double dPidTolerance = 0.1;
 
@@ -37,7 +37,7 @@ public class mX {
         this.e2d_ = (2*3.14159*wRadius)/tpr;
         this.dPid_ = dPid_;
 
-        dPid = new PIDV2(dPid_) {
+        dPid = new PID(dPid_) {
             @Override
             public void perform(double response) {
                 dResponse = response;
