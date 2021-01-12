@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.middleend.HardwareMappings.HWMap;
 
 public abstract class AutoBase extends LinearOpMode {
-    public HWMap robot;
+    public HWMap robot = new HWMap();
 
     @Override
     public void runOpMode() throws InterruptedException {

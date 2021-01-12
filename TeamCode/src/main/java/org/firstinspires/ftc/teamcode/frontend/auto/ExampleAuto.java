@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.frontend.auto;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 import org.firstinspires.ftc.teamcode.backend.control.higher_level.dPID;
 import org.firstinspires.ftc.teamcode.frontend.CONSTANTS;
 import org.firstinspires.ftc.teamcode.middleend.bases.AutoBase;
 
+@Autonomous(name = "ExampleAuto", group = "example")
 public class ExampleAuto extends AutoBase {
     private dPID dPID_TL, dPID_TR;
 

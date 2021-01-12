@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.middleend.HardwareMappings;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.backend.HWExtension.SeriesZ.mZ;
@@ -23,9 +24,14 @@ public class HWMap {
         BR_ = hwmap.get(DcMotor.class, "BR");
 
         TL = new mZ(TL_, CONSTANTS.wheel_radius_meters_SMALL_OMNI, CONSTANTS.encoder_count_per_rev_REV_ENCODERS);
+
         TR = new mZ(TR_, CONSTANTS.wheel_radius_meters_MECANUM, CONSTANTS.encoder_count_per_rev_REV);
+        TR.reverseDirection();
+
         BL = new mZ(BL_, CONSTANTS.wheel_radius_meters_MECANUM, CONSTANTS.encoder_count_per_rev_REV);
+
         BR = new mZ(BR_, CONSTANTS.wheel_radius_meters_MECANUM, CONSTANTS.encoder_count_per_rev_REV);
+        BR.reverseDirection();
 
         TL.hardReset();
         TR.hardReset();

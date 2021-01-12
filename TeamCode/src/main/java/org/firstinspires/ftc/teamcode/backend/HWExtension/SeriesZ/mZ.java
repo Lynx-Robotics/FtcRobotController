@@ -199,4 +199,14 @@ public class mZ {
     private void setLE(double lE) {
         this.lE = lE;
     }
+
+    // reverse direction
+    public void reverseDirection(){
+        DcMotorSimple.Direction current_dir = this.motor.getDirection();
+        if(current_dir == DcMotorSimple.Direction.FORWARD){
+            getMotor().setDirection(DcMotorSimple.Direction.REVERSE);
+        } else if (current_dir == DcMotorSimple.Direction.REVERSE){
+            getMotor().setDirection(DcMotorSimple.Direction.FORWARD);
+        }
+    }
 }
