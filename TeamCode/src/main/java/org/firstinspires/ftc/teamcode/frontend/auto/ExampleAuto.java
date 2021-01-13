@@ -3,12 +3,13 @@ package org.firstinspires.ftc.teamcode.frontend.auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.backend.control.higher_level.dPID;
+import org.firstinspires.ftc.teamcode.backend.control.higher_level.dPIDV2;
 import org.firstinspires.ftc.teamcode.frontend.CONSTANTS;
 import org.firstinspires.ftc.teamcode.middleend.bases.AutoBase;
 
 @Autonomous(name = "ExampleAuto", group = "example")
 public class ExampleAuto extends AutoBase {
-    private dPID dPID_TL, dPID_TR;
+    private dPIDV2 dPID_TL, dPID_TR;
 
     @Override
     public void codeToInit() {
@@ -16,8 +17,8 @@ public class ExampleAuto extends AutoBase {
         robot.BL.linkToMotor(robot.TL);
         robot.BR.linkToMotor(robot.TR);
 
-        dPID_TL = new dPID(robot.TL, CONSTANTS.dPid_);
-        dPID_TR = new dPID(robot.TR, CONSTANTS.dPid_);
+        dPID_TL = new dPIDV2(robot.TL, CONSTANTS.dPid_);
+        dPID_TR = new dPIDV2(robot.TR, CONSTANTS.dPid_);
     }
 
     @Override
@@ -26,8 +27,15 @@ public class ExampleAuto extends AutoBase {
             dPID_TR.execute(1.0);
             dPID_TL.execute(1.0);
 
-            robot.TL.setPower(dPID_TL.getResponse());
-            robot.TR.setPower(dPID_TR.getResponse());
+            double TLResponse = dPID_TL.getResponse();
+            double TRResponse = dPID_TR.getResponse();
+
+            telemetry.addData("TLResponse", TLResponse);
+            telemetry.addData("TRResponse", TRResponse);
+            telemetry.update();
+
+            robot.TL.setPower(TLResponse);
+            robot.TR.setPower(TRResponse);
         }
     }
 

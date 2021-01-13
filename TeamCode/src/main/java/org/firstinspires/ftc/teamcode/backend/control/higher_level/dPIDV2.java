@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.backend.control.higher_level;
 import org.firstinspires.ftc.teamcode.backend.HWExtension.SeriesZ.mZ;
 import org.firstinspires.ftc.teamcode.backend.control.low_level.PID.PID;
 
-public class dPID {
+public class dPIDV2 extends PID {
     // motor to use
     private mZ motor;
 
@@ -13,63 +13,42 @@ public class dPID {
     // success parameters (tolerance should be in percent)
     private double successTolerance = 0.005;
     private int successCount = 0;
-    private final int STND_SUCCESS_CAP = 500;
 
+    // var for accessing the response
     private double response = 0;
 
-    public dPID(mZ motor, double[] pidParams){
-        setMotor(motor);
-        pid = new PID(pidParams) {
-            @Override
-            public void perform(double response) {
-                setResponse(response);
-            }
-
-            @Override
-            public double getInputData() {
-                double dist = getMotor().getCD();
-
-                // success evaluation
-                if(isWithin(dist, successTolerance)){
-                    incrementSuccessCount();
-                } else {
-                    setSuccessCount(0);
-                }
-                return dist;
-            }
-        };
+    public dPIDV2(mZ motor, double kp, double ki, double kd) {
+        super(kp, ki, kd);
+        this.motor = motor;
     }
 
-    public dPID(mZ motor, double[] pidParams, double successTolerance){
-        setSuccessTolerance(successTolerance);
-        setMotor(motor);
-        pid = new PID(pidParams) {
-            @Override
-            public void perform(double response) {
-                getMotor().setPower(response);
-            }
+    public dPIDV2(mZ motor, double[] params) {
+        super(params);
+        this.motor = motor;
+    }
 
-            @Override
-            public double getInputData() {
-                double dist = getMotor().getCD();
+    @Override
+    public void perform(double response) {
+        setResponse(response);
+    }
 
-                // success evaluation
-                if(isWithin(dist, getSuccessTolerance())){
-                    incrementSuccessCount();
-                } else {
-                    setSuccessCount(0);
-                }
-                return dist;
-            }
-        };
+    @Override
+    public double getInputData() {
+        double dist = getMotor().getCD();
+
+        // success evaluation
+        if(isWithin(dist, successTolerance)){
+            incrementSuccessCount();
+        } else {
+            setSuccessCount(0);
+        }
+        return dist;
     }
 
     // relevant methods
     private void incrementSuccessCount() {
         successCount += 1;
     }
-
-
 
     public void execute(double target){
         // this is an iterative based function (should be called until the success criteria is met)
@@ -118,5 +97,4 @@ public class dPID {
     public double getResponse(){
         return this.response;
     }
-
 }

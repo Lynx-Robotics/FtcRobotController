@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.backend.HWExtension.SeriesX;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.backend.control.low_level.PID;
+import org.firstinspires.ftc.teamcode.backend.control.low_level.PID.PID;
 
 public class mX {
     // Raw Hardware

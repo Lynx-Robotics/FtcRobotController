@@ -20,6 +20,13 @@ public class ExampleTele extends TeleBase {
             // power only needs to be supplied to the TL and TR since the other are linked
             robot.TL.setPower(gamepad1.left_stick_y);
             robot.TR.setPower(gamepad1.right_stick_y);
+
+            if(gamepad1.a){
+                robot.crServo.setPower(1);
+            }
+            if(gamepad1.y){
+                robot.crServo.setPower(-1);
+            }
         }
     }
 }

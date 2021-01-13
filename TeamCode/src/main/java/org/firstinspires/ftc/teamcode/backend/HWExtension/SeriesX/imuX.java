@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.backend.control.low_level.PID;
+import org.firstinspires.ftc.teamcode.backend.control.low_level.PID.PID;
 import org.firstinspires.ftc.teamcode.frontend.CONSTANTS;
 
 public class imuX {
