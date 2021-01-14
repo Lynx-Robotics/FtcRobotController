@@ -12,18 +12,21 @@ public class HWMap {
     private HardwareMap hwmap;
 
     // primitive motor instances
-    private DcMotor TL_, TR_, BL_, BR_;
+    private DcMotor TL_, TR_, BL_, BR_, intakeMotor_;
     public CRServo crServo;
 
     // extended motor instances
-    public mZ TL, TR, BL, BR;
+    public mZ TL, TR, BL, BR, intakeMotor;
 
     public void init(HardwareMap ahwmap){
         this.hwmap = ahwmap;
+
+        // Drive Motor Instantiation
         TL_ = hwmap.get(DcMotor.class, "TL");
         TR_ = hwmap.get(DcMotor.class, "TR");
         BL_ = hwmap.get(DcMotor.class, "BL");
         BR_ = hwmap.get(DcMotor.class, "BR");
+        intakeMotor_ = hwmap.get(DcMotor.class, "intakeMotor");
 
         TL = new mZ(TL_, CONSTANTS.wheel_radius_meters_SMALL_OMNI, CONSTANTS.encoder_count_per_rev_REV_ENCODERS);
         TL.reverseDirection();
@@ -33,6 +36,8 @@ public class HWMap {
 
         BR = new mZ(BR_, CONSTANTS.wheel_radius_meters_MECANUM, CONSTANTS.encoder_count_per_rev_REV);
         TR = new mZ(TR_, CONSTANTS.wheel_radius_meters_MECANUM, CONSTANTS.encoder_count_per_rev_REV);
+
+        intakeMotor = new mZ(intakeMotor_);
 
         TL.hardReset();
         TR.hardReset();

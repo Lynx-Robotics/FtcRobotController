@@ -21,12 +21,18 @@ public class ExampleTele extends TeleBase {
             robot.TL.setPower(gamepad1.left_stick_y);
             robot.TR.setPower(gamepad1.right_stick_y);
 
+            // controls the intake
+            robot.intakeMotor.setPower((-1*gamepad1.left_trigger) + (gamepad1.right_trigger), 0.5);
+
+            // controls the other stuff
             if(gamepad1.a){
                 robot.crServo.setPower(1);
             }
             if(gamepad1.y){
                 robot.crServo.setPower(-1);
             }
+
+
         }
     }
 }

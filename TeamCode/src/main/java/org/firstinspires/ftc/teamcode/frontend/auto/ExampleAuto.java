@@ -17,25 +17,35 @@ public class ExampleAuto extends AutoBase {
         robot.BL.linkToMotor(robot.TL);
         robot.BR.linkToMotor(robot.TR);
 
-        dPID_TL = new dPIDV2(robot.TL, CONSTANTS.dPid_);
-        dPID_TR = new dPIDV2(robot.TR, CONSTANTS.dPid_);
+        // TODO: 1/14/2021 Tune PID Parameters for motors
+        double[] params = {0.1, 0.0, 0.0};
+
+        dPID_TL = new dPIDV2(robot.TL, params);
+        dPID_TR = new dPIDV2(robot.TR, params);
     }
 
     @Override
     public void codeToRun() {
-        while (dPID_TR.getSuccessCount() < 500 && dPID_TL.getSuccessCount() < 500){
+        resetRuntime();
+        // while success is less than 'x', execute PID
+        while ((dPID_TR.getSuccessCount() < 500 && dPID_TL.getSuccessCount() < 500) && getRuntime() < 3000){
+            // give PID target as 1.0 meter
             dPID_TR.execute(1.0);
             dPID_TL.execute(1.0);
 
+            // get the PID response (because this is done after the execute call, we are sure it
+            // is an updated response)
             double TLResponse = dPID_TL.getResponse();
             double TRResponse = dPID_TR.getResponse();
 
+            // send data to the phone
             telemetry.addData("TLResponse", TLResponse);
             telemetry.addData("TRResponse", TRResponse);
             telemetry.update();
 
-            robot.TL.setPower(TLResponse);
-            robot.TR.setPower(TRResponse);
+            // set powers
+            robot.TL.setPower(TLResponse, 0.5);
+            robot.TR.setPower(TRResponse, 0.5);
         }
     }
 
