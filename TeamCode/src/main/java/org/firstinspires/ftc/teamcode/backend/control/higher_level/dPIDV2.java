@@ -7,9 +7,6 @@ public class dPIDV2 extends PID {
     // motor to use
     private mZ motor;
 
-    // pid vars
-    private PID pid;
-
     // success parameters (tolerance should be in percent)
     private double successTolerance = 0.005;
     private int successCount = 0;
@@ -52,7 +49,7 @@ public class dPIDV2 extends PID {
 
     public void execute(double target){
         // this is an iterative based function (should be called until the success criteria is met)
-        pid.executePID(target);
+        executePID(target);
     }
 
     // misc methods

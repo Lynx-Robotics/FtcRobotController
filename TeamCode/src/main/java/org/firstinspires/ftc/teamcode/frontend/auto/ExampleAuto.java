@@ -28,7 +28,7 @@ public class ExampleAuto extends AutoBase {
     public void codeToRun() {
         resetRuntime();
         // while success is less than 'x', execute PID
-        while ((dPID_TR.getSuccessCount() < 500 && dPID_TL.getSuccessCount() < 500) && getRuntime() < 3000){
+        while ((dPID_TR.getSuccessCount() < 500 || dPID_TL.getSuccessCount() < 500) && getRuntime() < 10000){
             // give PID target as 1.0 meter
             dPID_TR.execute(1.0);
             dPID_TL.execute(1.0);
@@ -48,6 +48,4 @@ public class ExampleAuto extends AutoBase {
             robot.TR.setPower(TRResponse, 0.5);
         }
     }
-
-
 }

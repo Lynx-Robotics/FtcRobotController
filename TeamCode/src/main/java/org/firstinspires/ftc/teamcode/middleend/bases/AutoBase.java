@@ -3,11 +3,14 @@ package org.firstinspires.ftc.teamcode.middleend.bases;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.middleend.HardwareMappings.HWMap;
 
 public abstract class AutoBase extends LinearOpMode {
     public HWMap robot = new HWMap();
     private ElapsedTime runtime = new ElapsedTime();
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -29,6 +32,10 @@ public abstract class AutoBase extends LinearOpMode {
 
     public void resetRuntime(){
         runtime.reset();
+    }
+
+    public Telemetry getTelem() {
+        return telemetry;
     }
 
 

@@ -104,6 +104,7 @@ public class mZ {
 
     // method used for getting change in distance (relative to our last distance)
     public double getCD(boolean relative) {
+        updateDistance();
         if(relative){
             // relative refers to the distance relative to our
             // last recorded distance

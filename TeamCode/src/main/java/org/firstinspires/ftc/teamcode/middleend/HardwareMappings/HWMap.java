@@ -26,7 +26,7 @@ public class HWMap {
         TR_ = hwmap.get(DcMotor.class, "TR");
         BL_ = hwmap.get(DcMotor.class, "BL");
         BR_ = hwmap.get(DcMotor.class, "BR");
-        intakeMotor_ = hwmap.get(DcMotor.class, "intakeMotor");
+        intakeMotor_ = hwmap.get(DcMotor.class, "IntakeMotor");
 
         TL = new mZ(TL_, CONSTANTS.wheel_radius_meters_SMALL_OMNI, CONSTANTS.encoder_count_per_rev_REV_ENCODERS);
         TL.reverseDirection();
